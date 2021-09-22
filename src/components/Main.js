@@ -32,9 +32,9 @@ function Main({ user, setUser }) {
 
                     {user.movements.reverse()?.map((el, i, arr) => {
                         if (el > 0) {
-                            return <Movement status={"deposit"} statusValue={`${i + 1} deposit`} money={el} />
+                            return <Movement status={"deposit"} statusValue={`${arr.length - i} deposit`} money={el} />
                         } else {
-                            return <Movement status={"withdrawal"} statusValue={`${i + 1} withdrawal`} money={el} />
+                            return <Movement status={"withdrawal"} statusValue={`${arr.length - i} withdrawal`} money={el} />
 
                         }
 
