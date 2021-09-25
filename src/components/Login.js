@@ -1,26 +1,7 @@
 import React from 'react'
 
-function Login({ user, setUser, accounts }) {
 
-    const findUser = (e) => {
-
-        e.preventDefault();
-
-        let inputLoginUsername = document.querySelector('.login__input--user');
-        let inputLoginPin = document.querySelector('.login__input--pin');
-
-        let currentUser = accounts.find((el) => {
-            return el.username === inputLoginUsername.value && el.pin === Number(inputLoginPin.value);
-        })
-
-
-        currentUser.status = currentUser ? true : false;
-        setUser(currentUser)
-
-        inputLoginUsername.value = ""
-        inputLoginPin.value = ""
-
-    }
+function Login({ findUser }) {
 
     return (
         <div>
@@ -38,7 +19,7 @@ function Login({ user, setUser, accounts }) {
                     <input
                         type="text"
                         placeholder="PIN"
-                        maxlength="4"
+                        maxLength="4"
                         className="login__input login__input--pin"
                     />
                     <button onClick={findUser} className="login__btn">&rarr;</button>
