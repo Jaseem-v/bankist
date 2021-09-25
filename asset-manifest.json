@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/bankist/static/css/main.fb68af8a.chunk.css",
-    "main.js": "/bankist/static/js/main.449ac416.chunk.js",
-    "main.js.map": "/bankist/static/js/main.449ac416.chunk.js.map",
+    "main.js": "/bankist/static/js/main.d4772a6d.chunk.js",
+    "main.js.map": "/bankist/static/js/main.d4772a6d.chunk.js.map",
     "runtime-main.js": "/bankist/static/js/runtime-main.fdb2dbb6.js",
     "runtime-main.js.map": "/bankist/static/js/runtime-main.fdb2dbb6.js.map",
     "static/js/2.c16a36d9.chunk.js": "/bankist/static/js/2.c16a36d9.chunk.js",
@@ -15,6 +15,6 @@
     "static/js/runtime-main.fdb2dbb6.js",
     "static/js/2.c16a36d9.chunk.js",
     "static/css/main.fb68af8a.chunk.css",
-    "static/js/main.449ac416.chunk.js"
+    "static/js/main.d4772a6d.chunk.js"
   ]
 }
