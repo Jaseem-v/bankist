@@ -53,8 +53,6 @@ function App() {
       .split(' ')
       .map(name => name[0])
       .join('');
-
-    acc.status = false;
   });
 
 
@@ -72,30 +70,33 @@ function App() {
       return el.username === inputLoginUsername.value && el.pin === loginPin;
     });
 
+    inputLoginUsername.value = inputLoginPin.value = ""
 
-    // currentUser.status = currentUser ? true : false;
-
-
-    inputLoginUsername.value = ""
-    inputLoginPin.value = ""
-
-    setUser(currentUser);
-
+    if (currentUser) {
+      setUser(currentUser);
+    } else {
+      alert("no user");
+    }
 
   }
 
 
+  ///////////////////////////////////////////////////////////
+  /// Loan
 
   let applyLoan = (e) => {
     e.preventDefault();
 
     let inputLoanAmount = document.querySelector('.form__input--loan-amount');
+    let amoutPercent = currentUser.movements.some((el) => el >= Number(inputLoanAmount.value) * 0.1)
 
-    currentUser.movements.push(Number(inputLoanAmount.value));
-
+    if (amoutPercent) {
+      currentUser.movements.push(Number(inputLoanAmount.value));
+    }
     inputLoanAmount.value = "";
 
     setUser({ ...currentUser })
+
 
 
   }
@@ -120,10 +121,39 @@ function App() {
     }
     inputTransferTo.value = inputTransferAmount.value = ""
 
-    setUser({...currentUser})
+    setUser({ ...currentUser })
 
 
+  }
 
+  ////////////////////////////////////////////////////////////////////
+  ////// Close Account
+
+  let closeAccount = (e) => {
+    e.preventDefault();
+
+    let inputCloseUsername = document.querySelector('.form__input--user');
+    let inputClosePin = document.querySelector('.form__input--pin');
+
+    if (inputCloseUsername.value === currentUser.username && Number(inputClosePin.value) === currentUser.pin) {
+      let closeUserIndex = accounts.findIndex((el) => {
+        return el.username === inputCloseUsername.value && el.pin === Number(inputClosePin.value);
+      })
+
+      accounts.splice(closeUserIndex, 1);
+
+      currentUser = undefined;
+
+      setUser(currentUser);
+
+      console.log(accounts);
+    } else {
+      console.log("wrong userName");
+    }
+
+
+    inputCloseUsername.value = "";
+    inputClosePin.value = "";
   }
 
 
@@ -144,6 +174,7 @@ function App() {
           currentUser={currentUser}
           user={user}
           transferMoney={transferMoney}
+          closeAccount={closeAccount}
         />
         : console.log("no user")
 

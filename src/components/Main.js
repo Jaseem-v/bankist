@@ -1,18 +1,28 @@
 import React from 'react'
+import Loan from './Loan';
 import Movement from './Movement';
+import Transfer from './Transfer';
 
-function Main({  applyLoan, user,transferMoney }) {
+function Main({ applyLoan, user, transferMoney, closeAccount }) {
 
 
-    let allBalance = user.movements.reduce((acc, el) => acc + el, 0);
+    let allBalance = user?.movements?.reduce((acc, el) => acc + el, 0);
 
     user.balance = allBalance
 
-    let totalDeposit = user.movements.filter((el) => el > 0).reduce((acc, el) => acc + el, 0)
-    let totalWithdrawal = user.movements.filter((el) => el < 0).reduce((acc, el) => acc + el, 0);
+    let totalDeposit = user?.movements?.filter((el) => el > 0).reduce((acc, el) => acc + el, 0)
+    let totalWithdrawal = user?.movements?.filter((el) => el < 0).reduce((acc, el) => acc + el, 0);
+
+    const interest = user?.movements
+        ?.filter(mov => mov > 0)
+        ?.map(deposit => (deposit * user?.interestRate) / 100)
+        ?.filter((int, i, arr) => {
+            return int >= 1;
+        })
+        ?.reduce((acc, int) => acc + int, 0);
 
 
-   
+
 
 
 
@@ -35,7 +45,7 @@ function Main({  applyLoan, user,transferMoney }) {
 
 
 
-                    {user.movements.reverse().map((mov, i, arr) =>
+                    {user?.movements?.reverse()?.map((mov, i, arr) =>
                         <Movement key={i} status={mov > 0 ? "deposit" : "withdrawal"} statusValue={`${arr.length - i} ${mov > 0 ? "deposit" : "withdrawal"}`} money={mov} />
                     )}
 
@@ -45,27 +55,9 @@ function Main({  applyLoan, user,transferMoney }) {
 
 
 
-                {/* <!-- OPERATION: TRANSFERS --> */}
-                <div className="operation operation--transfer">
-                    <h2>Transfer money</h2>
-                    <form className="form form--transfer">
-                        <input type="text" className="form__input form__input--to" />
-                        <input type="number" className="form__input form__input--amount" />
-                        <button onClick={transferMoney} className="form__btn form__btn--transfer">&rarr;</button>
-                        <label className="form__label">Transfer to</label>
-                        <label className="form__label">Amount</label>
-                    </form>
-                </div>
+                <Transfer transferMoney={transferMoney} />
 
-                {/* <!-- OPERATION: LOAN --> */}
-                <div className="operation operation--loan">
-                    <h2>Request loan</h2>
-                    <form className="form form--loan">
-                        <input type="number" className="form__input form__input--loan-amount" />
-                        <button onClick={applyLoan} className="form__btn form__btn--loan">&rarr;</button>
-                        <label className="form__label form__label--loan">Amount</label>
-                    </form>
-                </div>
+                <Loan applyLoan={applyLoan} />
 
                 {/* <!-- OPERATION: CLOSE --> */}
                 <div className="operation operation--close">
@@ -77,7 +69,7 @@ function Main({  applyLoan, user,transferMoney }) {
                             maxlength="6"
                             className="form__input form__input--pin"
                         />
-                        <button className="form__btn form__btn--close">&rarr;</button>
+                        <button onClick={closeAccount} className="form__btn form__btn--close">&rarr;</button>
                         <label className="form__label">Confirm user</label>
                         <label className="form__label">Confirm PIN</label>
                     </form>
@@ -90,7 +82,7 @@ function Main({  applyLoan, user,transferMoney }) {
                     <p className="summary__label">Out</p>
                     <p className="summary__value summary__value--out">{`${-totalWithdrawal}€`}</p>
                     <p className="summary__label">Interest</p>
-                    <p className="summary__value summary__value--interest">0000€</p>
+                    <p className="summary__value summary__value--interest">{`${interest}€`}</p>
                     <button className="btn--sort"> l SORT </button>
                 </div>
 
