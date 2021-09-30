@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react';
 import Loan from './Loan';
 import Movement from './Movement';
 import Transfer from './Transfer';
@@ -13,17 +13,41 @@ function Main({ applyLoan, user, transferMoney, closeAccount }) {
     let totalDeposit = user?.movements?.filter((el) => el > 0).reduce((acc, el) => acc + el, 0)
     let totalWithdrawal = user?.movements?.filter((el) => el < 0).reduce((acc, el) => acc + el, 0);
 
-    const interest = user?.movements
+    const currencyFormater = (value) => {
+        let currencyOptions = {
+            style: "currency",
+            currency: "INR"
+        }
+
+        return new Intl.NumberFormat(navigator.languages, currencyOptions).format(value)
+    }
+
+    const interest = Math.round(user?.movements
         ?.filter(mov => mov > 0)
         ?.map(deposit => (deposit * user?.interestRate) / 100)
-        ?.filter((int, i, arr) => {
-            return int >= 1;
-        })
-        ?.reduce((acc, int) => acc + int, 0);
+        ?.filter((int) => int >= 1)
+        ?.reduce((acc, int) => acc + int, 0));
 
 
+    let dateOptions = {
+        hour: "numeric",
+        minute: "numeric",
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        weekday: "long",
+    }
+    let now = new Intl.DateTimeFormat("en-IN", dateOptions).format(new Date());
 
+    const [sort, setSort] = useState(false);
 
+    const movs = sort ? user?.movements.slice().sort((a, b) => a - b) : user?.movements?.reverse();
+
+    const sortClick = (e) => {
+        e.preventDefault();
+        setSort(!sort);
+        // sort = !sort;
+    }
 
 
     return (
@@ -34,10 +58,10 @@ function Main({ applyLoan, user, transferMoney, closeAccount }) {
                     <div>
                         <p className="balance__label">Current balance</p>
                         <p className="balance__date">
-                            As of <span className="date">05/03/2037</span>
+                            As of <span className="date">{now}</span>
                         </p>
                     </div>
-                    <p className="balance__value">{`${user.balance}€`}</p>
+                    <p className="balance__value">{currencyFormater(user.balance)}</p>
                 </div>
 
                 {/* <!-- MOVEMENTS --> */}
@@ -45,8 +69,15 @@ function Main({ applyLoan, user, transferMoney, closeAccount }) {
 
 
 
-                    {user?.movements?.reverse()?.map((mov, i, arr) =>
-                        <Movement key={i} status={mov > 0 ? "deposit" : "withdrawal"} statusValue={`${arr.length - i} ${mov > 0 ? "deposit" : "withdrawal"}`} money={mov} />
+                    {movs?.map((mov, i, arr) =>
+                        <Movement
+                            key={i}
+                            status={mov > 0 ? "deposit" : "withdrawal"}
+                            statusValue={`${arr.length - i} ${mov > 0 ? "deposit" : "withdrawal"}`}
+                            money={mov}
+                            date={user.movementsDates[i]}
+                            currencyFormater={currencyFormater}
+                        />
                     )}
 
 
@@ -78,12 +109,12 @@ function Main({ applyLoan, user, transferMoney, closeAccount }) {
                 {/* <!-- SUMMARY --> */}
                 <div className="summary">
                     <p className="summary__label">In</p>
-                    <p className="summary__value summary__value--in">{`${totalDeposit}€`}</p>
+                    <p className="summary__value summary__value--in">{currencyFormater(totalDeposit)}</p>
                     <p className="summary__label">Out</p>
-                    <p className="summary__value summary__value--out">{`${-totalWithdrawal}€`}</p>
+                    <p className="summary__value summary__value--out">{currencyFormater(-totalWithdrawal)}</p>
                     <p className="summary__label">Interest</p>
-                    <p className="summary__value summary__value--interest">{`${interest}€`}</p>
-                    <button className="btn--sort"> l SORT </button>
+                    <p className="summary__value summary__value--interest">{currencyFormater(interest)}</p>
+                    <button onClick={sortClick} className="btn--sort"> l SORT </button>
                 </div>
 
 

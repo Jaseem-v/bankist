@@ -1,13 +1,14 @@
 import React from 'react'
 
 
-function Login({ findUser }) {
+
+function Login({ findUser, user }) {
 
     return (
         <div>
             {/* <!-- TOP NAVIGATION --> */}
             <nav>
-                <p className="welcome">Log in to get started</p>
+                <p className="welcome">{user ? `Welcome Back , ${user.owner.split(" ")[0]}` : "Log in to get started"}</p>
                 <img src="logo.png" alt="Logo" className="logo" />
                 <form className="login">
                     <input
