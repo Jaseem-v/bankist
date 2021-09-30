@@ -46,7 +46,6 @@ function Main({ applyLoan, user, transferMoney, closeAccount }) {
     const sortClick = (e) => {
         e.preventDefault();
         setSort(!sort);
-        // sort = !sort;
     }
 
 
