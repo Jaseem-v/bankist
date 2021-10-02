@@ -17,7 +17,7 @@ function Main() {
     // Sort
 
     const [sort, setSort] = useState(false);
-    const movs = sort ? user?.movements.slice().sort((a, b) => a - b) : user?.movements;
+    const movs = sort ? user.movements.slice().sort((a, b) => a - b) : user.movements;
 
     const sortClick = (e) => {
         e.preventDefault();
@@ -87,7 +87,7 @@ function Main() {
 
 
 
-                    {movs?.reverse().map((mov, i, arr) =>
+                    {movs?.reverse()?.map((mov, i, arr) =>
                         <Movement
                             key={i}
                             status={mov > 0 ? "deposit" : "withdrawal"}
