@@ -1,6 +1,41 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { Context } from '../Context';
 
-function Transfer({transferMoney }) {
+
+function Transfer() {
+
+    let { setUser, accounts } = useContext(Context);
+
+    ///////////////////////////////////////////////////////
+    /// transferMoney
+
+    let transferMoney = (e) => {
+        e.preventDefault();
+        let inputTransferTo = document.querySelector('.form__input--to');
+        let inputTransferAmount = document.querySelector('.form__input--amount');
+
+        let amount = +inputTransferAmount.value;
+
+        let receiverAcc = accounts.find((el) => {
+            return el.username === inputTransferTo.value
+        });
+
+        if (amount && window.currentUser.balance > amount && receiverAcc && receiverAcc?.username !== window.currentUser.username) {
+            window.currentUser.movements.push(-amount);
+            receiverAcc.movements.push(amount);
+
+            //////// Date push
+            window.currentUser.movementsDates.push(new Date().toISOString());
+            receiverAcc.movementsDates.push(new Date().toISOString());
+        }
+
+        inputTransferTo.value = inputTransferAmount.value = ""
+
+        setUser({ ...window.currentUser });
+        if (window.timerInterval) clearInterval(window.timerInterval);
+        window.startTimer();
+        // setTimeInt(time0);
+    }
 
 
     return (

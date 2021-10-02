@@ -1,17 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import Close from './Close';
 import Loan from './Loan';
 import Movement from './Movement';
 import Transfer from './Transfer';
+import { Context } from '../Context';
+import Summary from './Summary';
 
-function Main({ applyLoan, user, transferMoney, closeAccount }) {
 
 
-    let allBalance = user?.movements?.reduce((acc, el) => acc + el, 0);
 
-    user.balance = allBalance
+function Main() {
 
-    let totalDeposit = user?.movements?.filter((el) => el > 0).reduce((acc, el) => acc + el, 0)
-    let totalWithdrawal = user?.movements?.filter((el) => el < 0).reduce((acc, el) => acc + el, 0);
+    let { user, timer, } = useContext(Context);
+
+    //////////////////////////////////////////////////////
+    // Sort
+
+    const [sort, setSort] = useState(false);
+    const movs = sort ? user?.movements.slice().sort((a, b) => a - b) : user?.movements;
+
+    const sortClick = (e) => {
+        e.preventDefault();
+        setSort(!sort);
+    }
+
+    ////////////////////////////////////////////////////////////
+    // currency format
 
     const currencyFormater = (value) => {
         let currencyOptions = {
@@ -22,31 +36,36 @@ function Main({ applyLoan, user, transferMoney, closeAccount }) {
         return new Intl.NumberFormat(navigator.languages, currencyOptions).format(value)
     }
 
-    const interest = Math.round(user?.movements
-        ?.filter(mov => mov > 0)
-        ?.map(deposit => (deposit * user?.interestRate) / 100)
-        ?.filter((int) => int >= 1)
-        ?.reduce((acc, int) => acc + int, 0));
+    ////////////////////////////////
+    // calculation
 
+    let allBalance = user?.movements?.reduce((acc, el) => acc + el, 0);
+    user.balance = allBalance
+
+
+
+    ////////////////////////////////////////////////////////////
+    // Date
 
     let dateOptions = {
-        hour: "numeric",
-        minute: "numeric",
         year: "numeric",
         month: "long",
         day: "numeric",
         weekday: "long",
+        hour: "numeric",
+        minute: "numeric"
     }
     let now = new Intl.DateTimeFormat("en-IN", dateOptions).format(new Date());
 
-    const [sort, setSort] = useState(false);
 
-    const movs = sort ? user?.movements.slice().sort((a, b) => a - b) : user?.movements?.reverse();
 
-    const sortClick = (e) => {
-        e.preventDefault();
-        setSort(!sort);
-    }
+
+    
+
+
+
+
+
 
 
     return (
@@ -68,7 +87,7 @@ function Main({ applyLoan, user, transferMoney, closeAccount }) {
 
 
 
-                    {movs?.map((mov, i, arr) =>
+                    {movs?.reverse().map((mov, i, arr) =>
                         <Movement
                             key={i}
                             status={mov > 0 ? "deposit" : "withdrawal"}
@@ -84,42 +103,18 @@ function Main({ applyLoan, user, transferMoney, closeAccount }) {
                 </div>
 
 
+                <Transfer />
 
-                <Transfer transferMoney={transferMoney} />
+                <Loan />
 
-                <Loan applyLoan={applyLoan} />
+                <Close />
 
-                {/* <!-- OPERATION: CLOSE --> */}
-                <div className="operation operation--close">
-                    <h2>Close account</h2>
-                    <form className="form form--close">
-                        <input type="text" className="form__input form__input--user" />
-                        <input
-                            type="password"
-                            maxlength="6"
-                            className="form__input form__input--pin"
-                        />
-                        <button onClick={closeAccount} className="form__btn form__btn--close">&rarr;</button>
-                        <label className="form__label">Confirm user</label>
-                        <label className="form__label">Confirm PIN</label>
-                    </form>
-                </div>
-
-                {/* <!-- SUMMARY --> */}
-                <div className="summary">
-                    <p className="summary__label">In</p>
-                    <p className="summary__value summary__value--in">{currencyFormater(totalDeposit)}</p>
-                    <p className="summary__label">Out</p>
-                    <p className="summary__value summary__value--out">{currencyFormater(-totalWithdrawal)}</p>
-                    <p className="summary__label">Interest</p>
-                    <p className="summary__value summary__value--interest">{currencyFormater(interest)}</p>
-                    <button onClick={sortClick} className="btn--sort"> l SORT </button>
-                </div>
+                <Summary sortClick={sortClick} currencyFormater={currencyFormater} />
 
 
                 {/* <!-- LOGOUT TIMER --> */}
                 <p className="logout-timer">
-                    You will be logged out in <span className="timer">05:00</span>
+                    You will be logged out in <span className="timer" >{timer}</span>
                 </p>
             </main>
         </div>

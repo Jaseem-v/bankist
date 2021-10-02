@@ -1,8 +1,37 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { Context } from '../Context';
 
 
 
-function Login({ findUser, user }) {
+function Login() {
+    let { user, setUser, accounts } = useContext(Context);
+
+
+    /////////////////////////////////////////////
+    // finduser
+    let findUser = (e) => {
+        e.preventDefault();
+        let inputLoginUsername = document.querySelector('.login__input--user');
+        let inputLoginPin = document.querySelector('.login__input--pin');
+
+        let loginPin = Number.parseInt(inputLoginPin.value)
+
+        window.currentUser = accounts.find((el) => {
+            return el.username === inputLoginUsername.value && el.pin === loginPin;
+        });
+
+        inputLoginUsername.value = inputLoginPin.value = ""
+
+        if (window.currentUser) {
+            setUser(window.currentUser);
+            if (window.timerInterval) clearInterval(window.timerInterval);
+            window.startTimer();
+ 
+        } else {
+            alert("no user");
+        }
+
+    }
 
     return (
         <div>
