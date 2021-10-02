@@ -18,10 +18,12 @@ function Main() {
 
     const [sort, setSort] = useState(false);
 
+    let movs;
+
     if (sort == true)
-        let movs = user.movements.slice().sort((a, b) => a - b)
+        movs = user.movements.slice().sort((a, b) => a - b)
     else
-        let movs = user.movements
+        movs = user.movements
 
 
 
