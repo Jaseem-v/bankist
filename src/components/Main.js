@@ -17,7 +17,13 @@ function Main() {
     // Sort
 
     const [sort, setSort] = useState(false);
-    const movs = sort ? user.movements.slice().sort((a, b) => a - b) : user.movements;
+
+    if (sort == true)
+        let movs = user.movements.slice().sort((a, b) => a - b)
+    else
+        let movs = user.movements
+
+
 
     const sortClick = (e) => {
         e.preventDefault();
@@ -60,7 +66,7 @@ function Main() {
 
 
 
-    
+
 
 
 
