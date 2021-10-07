@@ -20,10 +20,8 @@ function Main() {
 
     let movs;
 
-    if (sort == true)
-        movs = user.movements.slice().sort((a, b) => a - b)
-    else
-        movs = user.movements
+
+    movs = sort ? user.movements.slice().sort((a, b) => a - b).reverse() : user.movements.reverse()
 
 
 
@@ -95,7 +93,7 @@ function Main() {
 
 
 
-                    {movs?.reverse()?.map((mov, i, arr) =>
+                    {movs.map((mov, i, arr) =>
                         <Movement
                             key={i}
                             status={mov > 0 ? "deposit" : "withdrawal"}
