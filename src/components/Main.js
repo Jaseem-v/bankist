@@ -11,7 +11,7 @@ import Summary from './Summary';
 
 function Main() {
 
-    let { user, timer, } = useContext(Context);
+    let { user } = useContext(Context);
 
     //////////////////////////////////////////////////////
     // Sort
@@ -91,18 +91,16 @@ function Main() {
                 {/* <!-- MOVEMENTS --> */}
                 <div className="movements">
 
-
-
-                    {movs.map((mov, i, arr) =>
-                        <Movement
+                    {movs.map((el, i, arr) => {
+                        return <Movement
                             key={i}
-                            status={mov > 0 ? "deposit" : "withdrawal"}
-                            statusValue={`${arr.length - i} ${mov > 0 ? "deposit" : "withdrawal"}`}
-                            money={mov}
+                            status={el > 0 ? "deposit" : "withdrawal"}
+                            statusValue={`${arr.length - i} ${el > 0 ? "deposit" : "withdrawal"}`}
+                            money={el}
                             date={user.movementsDates[i]}
                             currencyFormater={currencyFormater}
                         />
-                    )}
+                    })}
 
 
 
@@ -120,7 +118,7 @@ function Main() {
 
                 {/* <!-- LOGOUT TIMER --> */}
                 <p className="logout-timer">
-                    You will be logged out in <span className="timer" >{timer}</span>
+                    You will be logged out in <span className="timer" >05:00</span>
                 </p>
             </main>
         </div>

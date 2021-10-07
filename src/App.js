@@ -87,7 +87,6 @@ function App() {
 
 
   const [user, setUser] = useState(0);
-  const [timer, setTimer] = useState("05:00");
 
 
 
@@ -112,7 +111,7 @@ function App() {
     timerInterval = setInterval(() => {
       let minute = `${Math.floor(timeInt / 60)}`.padStart(2, 0);
       let second = `${timeInt % 60}`.padStart(2, 0);
-      setTimer(`${minute}:${second}`);
+      document.querySelector(".timer").textContent = `${minute}:${second}`
 
       if (timeInt === 0) {
         window.currentUser = undefined;
@@ -130,7 +129,7 @@ function App() {
   return (
     <div>
 
-      <Context.Provider value={{ user, setUser, accounts, timer, setTimer }}>
+      <Context.Provider value={{ user, setUser, accounts }}>
 
         <Login />
 
