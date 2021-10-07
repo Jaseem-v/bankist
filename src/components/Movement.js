@@ -1,9 +1,7 @@
 import React from 'react'
 
+
 function Movement({ status, money, statusValue, date, currencyFormater }) {
-
-
-
 
 
     const formatDate = (date1, date2) => {

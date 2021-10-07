@@ -81,9 +81,8 @@ const accounts = [account1, account2, account3, account4];
 
 
 window.currentUser = {};
-window.timerInterval = 0;
-window.startTimer = undefined;
-
+export let timerInterval = 0;
+export let startTimer = undefined;
 function App() {
 
 
@@ -107,24 +106,24 @@ function App() {
   //  Timer
 
 
-  // window.startTimer = () => {
+  startTimer = () => {
 
-  //   let timeInt = 300;
-  //   window.timerInterval = setInterval(() => {
-  //     let minute = `${Math.floor(timeInt / 60)}`.padStart(2, 0);
-  //     let second = `${timeInt % 60}`.padStart(2, 0);
-  //     setTimer(`${minute}:${second}`);
+    let timeInt = 300;
+    timerInterval = setInterval(() => {
+      let minute = `${Math.floor(timeInt / 60)}`.padStart(2, 0);
+      let second = `${timeInt % 60}`.padStart(2, 0);
+      setTimer(`${minute}:${second}`);
 
-  //     if (timeInt === 0) {
-  //       window.currentUser = undefined;
-  //       setUser(window.currentUser);
-  //     }
-  //     timeInt--;
+      if (timeInt === 0) {
+        window.currentUser = undefined;
+        setUser(window.currentUser);
+      }
+      timeInt--;
 
-  //   }, 1000);
+    }, 1000);
 
 
-  // }
+  }
 
 
 

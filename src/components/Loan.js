@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
 import { Context } from '../Context';
+import { startTimer,timerInterval } from "../App";
 
 function Loan() {
 
@@ -20,8 +21,8 @@ function Loan() {
                 alert("loan Aproved");
                 inputLoanAmount.value = "";
                 setUser({ ...window.currentUser })
-                if (window.timerInterval) clearInterval(window.timerInterval);
-                // window.startTimer();
+                if (timerInterval) clearInterval(timerInterval);
+                startTimer();
             }, 2000);
         }
     }

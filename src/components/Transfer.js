@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
 import { Context } from '../Context';
+import { startTimer,timerInterval } from "../App";
 
 
 function Transfer() {
@@ -32,8 +33,8 @@ function Transfer() {
         inputTransferTo.value = inputTransferAmount.value = ""
 
         setUser({ ...window.currentUser });
-        if (window.timerInterval) clearInterval(window.timerInterval);
-        // window.startTimer();
+        if (timerInterval) clearInterval(timerInterval);
+        startTimer();
         // setTimeInt(time0);
     }
 
