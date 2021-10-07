@@ -37,7 +37,7 @@ function Login() {
         <div>
             {/* <!-- TOP NAVIGATION --> */}
             <nav>
-                <p className="welcome">{user ? `Welcome Back , ${user.owner.split(" ")[0]}` : "Log in to get started timer changed"}</p>
+                <p className="welcome">{user ? `Welcome Back , ${user.owner.split(" ")[0]}` : "Log in to get started"}</p>
                 <img src="logo.png" alt="Logo" className="logo" />
                 <form className="login">
                     <input
