@@ -91,7 +91,7 @@ function Main() {
                 {/* <!-- MOVEMENTS --> */}
                 <div className="movements">
 
-                    {movs.map((el, i, arr) => {
+                    {movs.reverse().map((el, i, arr) => {
                         return <Movement
                             key={i}
                             status={el > 0 ? "deposit" : "withdrawal"}
