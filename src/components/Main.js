@@ -21,7 +21,7 @@ function Main() {
     let movs;
 
 
-    movs = sort ? user.movements.slice().sort((a, b) => a - b).reverse() : user.movements.reverse()
+    movs = sort ? user.movements.slice().sort((a, b) => a - b) : user.movements
 
 
 
