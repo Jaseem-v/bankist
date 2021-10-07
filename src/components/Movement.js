@@ -21,7 +21,7 @@ function Movement({ status, money, statusValue, date, currencyFormater }) {
     const currentDate = formatDate(new Date(date), new Date());
 
 
-
+    // asd
 
 
 
