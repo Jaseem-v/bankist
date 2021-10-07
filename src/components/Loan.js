@@ -10,7 +10,6 @@ function Loan() {
 
     let applyLoan = (e) => {
         e.preventDefault();
-
         let inputLoanAmount = document.querySelector('.form__input--loan-amount');
         let amoutPercent = window.currentUser?.movements?.some((el) => el >= Number(inputLoanAmount.value) * 0.1)
 
@@ -24,10 +23,9 @@ function Loan() {
                 if (window.timerInterval) clearInterval(window.timerInterval);
                 window.startTimer();
             }, 2000);
-
         }
-
     }
+
     return (
         <div>
             {/* <!-- OPERATION: LOAN --> */}

@@ -13,7 +13,7 @@ function Movement({ status, money, statusValue, date, currencyFormater }) {
         if (dateDifference === 1) return "YESTURDAY"
         if (dateDifference < 7) return `${dateDifference} days ago`
 
-        return new Intl.DateTimeFormat(navigator.language).format(new Date(date));
+        return new Intl.DateTimeFormat("en-GB").format(new Date(date));
 
     }
 
