@@ -21,7 +21,7 @@ function Loan() {
                 inputLoanAmount.value = "";
                 setUser({ ...window.currentUser })
                 if (window.timerInterval) clearInterval(window.timerInterval);
-                window.startTimer();
+                // window.startTimer();
             }, 2000);
         }
     }

@@ -33,7 +33,7 @@ function Transfer() {
 
         setUser({ ...window.currentUser });
         if (window.timerInterval) clearInterval(window.timerInterval);
-        window.startTimer();
+        // window.startTimer();
         // setTimeInt(time0);
     }
 

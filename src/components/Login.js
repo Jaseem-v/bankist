@@ -25,7 +25,7 @@ function Login() {
         if (window.currentUser) {
             setUser(window.currentUser);
             if (window.timerInterval) clearInterval(window.timerInterval);
-            window.startTimer();
+            // window.startTimer();
  
         } else {
             alert("no user");
